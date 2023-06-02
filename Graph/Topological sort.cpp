@@ -23,11 +23,26 @@ class Solution
 	    s.push(start);
 	}
 	
+	void find_indegree(vector<int> adj[] , vector<int>&indegree , int V){
+	    
+	    for(int i=0; i<V; i++){
+	        
+	        for(auto j:adj[i]){
+	            
+	            indegree[j]++;
+	        }
+	    }
+	}
+	
 	
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
 	    // code here
 	    
+	    
+	    //DFS
+	    
+	    /*
 	    vector<bool> vis(V);
 	    stack<int> s;
 	    for(int i = 0; i < V; i++) {
@@ -43,6 +58,43 @@ class Solution
 	        res.push_back(s.top()); s.pop();
 	    }
 	    return res;
+	    */
+	    
+	    //BFS
+	    
+	    queue<int>q;
+	    vector<int>indegree(V,0);
+	    
+	    find_indegree(adj,indegree,V);
+	    
+	    for(int i=0; i<V; i++){
+	        
+	        if(indegree[i]==0){
+	            
+	            q.push(i);
+	        }
+	    }
+	    
+	    vector<int>ans;
+	    
+	    while(!q.empty()){
+	        
+	        int front=q.front();
+	        q.pop();
+	        ans.push_back(front);
+	        
+	        for(auto it:adj[front]){
+	            
+	            indegree[it]--;
+	            
+	            if(indegree[it]==0){
+	                
+	                q.push(it);
+	            }
+	        }
+	    }
+	    
+	    return ans;
 	}
 
 };
