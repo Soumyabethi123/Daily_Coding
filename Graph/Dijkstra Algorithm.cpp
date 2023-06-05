@@ -31,6 +31,13 @@ class Solution
             for(auto i : adj[node]){
                 
                 if(dist[i[0]] > d+i[1]){
+			
+		    auto record = st.find({dist[i[0]],i[0]});
+                    
+                    if(record != st.end()){
+                        
+                        st.erase(record);
+                    }
                     
                     dist[i[0]] = d+i[1];
                     
