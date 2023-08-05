@@ -95,33 +95,31 @@ class Solution {
   public:
     // Function to return the diameter of a Binary Tree.
     
-    int height(Node* node){
-        // code here 
-        if(node==NULL){
+    
+    pair<int,int> fast_dia(Node *root){
+        
+        if(root==NULL){
             
-            return 0;
+            return {0,0};
         }
         
-        int left=height(node->left);
-        int right=height(node->right);
+        pair<int,int>left = fast_dia(root->left);
+        pair<int,int>right = fast_dia(root->right);
         
-        return max(left,right)+1;
+        int a=left.first;
+        int b=right.first;
+        int c=left.second + right.second + 1;
+        
+        pair<int,int>ans = {max(a,max(b,c)) , max(left.second,right.second)+1};
+        
+        return ans;
     }
     
     
     int diameter(Node* root) {
         // Your code here
-        if(root==NULL){
-            
-            return 0;
-        }
-        
-        int a=diameter(root->left);
-        int b=diameter(root->right);
-        
-        int c=height(root->left)+height(root->right)+1;
-        
-        return max(a,max(b,c));
+    
+        return fast_dia(root).first;
     }
 };
 
